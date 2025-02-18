@@ -20,7 +20,7 @@ pipeline {
         }
         stage('Run Server') {
             steps {
-                sshagent(['aws.pem']) {
+                sshagent(credentials: ['aws.pem']) {
                     sh '''
                         ssh -i aws.pem ubuntu@3.108.63.115 "cd /home/ubuntu/weather-app && nohup node server.js > weather.log 2>&1 &"
                     '''
