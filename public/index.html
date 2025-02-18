@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+</head>
+<body>
+    <h1>Live Weather App</h1>
+    <div id="weather">
+        <p>Loading weather...</p>
+    </div>
+
+    <script>
+        fetch('/weather')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('weather').innerHTML = 
+                    `Temperature: ${data.temperature}°C, Condition: ${data.condition}`;
+            })
+            .catch(error => {
+                console.error('Error fetching weather:', error);
+            });
+    </script>
+</body>
+</html>
+
