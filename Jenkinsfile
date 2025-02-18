@@ -8,21 +8,21 @@ pipeline {
         }
         stage('Install Dependencies') {
             steps {
-                sshagent(['ec2-ssh-key']) {
+                sshagent(['aws.pem']) {
                     sh '''
-                        ssh ubuntu@your-ec2-ip "rm -rf /home/ubuntu/my-weather-app"
-                        ssh ubuntu@your-ec2-ip "mkdir -p /home/ubuntu/my-weather-app"
-                        scp -r * ubuntu@your-ec2-ip:/home/ubuntu/my-weather-app
-                        ssh ubuntu@your-ec2-ip "cd /home/ubuntu/my-weather-app && npm install"
+                        ssh -i aws.pem ubuntu@3.108.63.115 "rm -rf /home/ubuntu/my-weather-app"
+                        ssh -i aws.pem ubuntu@3.108.63.115 "mkdir -p /home/ubuntu/my-weather-app"
+                        scp -i aws.pem -r * ubuntu@3.108.63.115:/home/ubuntu/my-weather-app
+                        ssh -i aws.pem ubuntu@3.108.63.115 "cd /home/ubuntu/my-weather-app && npm install"
                     '''
                 }
             }
         }
         stage('Run Server') {
             steps {
-                sshagent(['ec2-ssh-key']) {
+                sshagent(['aws.pem']) {
                     sh '''
-                        ssh ubuntu@your-ec2-ip "cd /home/ubuntu/my-weather-app && nohup node server.js > weather.log 2>&1 &"
+                        ssh -i aws.pem ubuntu@3.108.63.115 "cd /home/ubuntu/my-weather-app && nohup node server.js > weather.log 2>&1 &"
                     '''
                 }
             }
