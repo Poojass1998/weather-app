@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Checkout Code') {
             steps {
-                git 'https://github.com/Poojass1998/my-weather-app.git'
+                git credentialsId: 'github-pat', url: 'https://github.com/Poojass1998/my-weather-app.git'
             }
         }
         stage('Install Dependencies') {
